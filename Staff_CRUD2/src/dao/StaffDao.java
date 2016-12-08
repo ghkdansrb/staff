@@ -4,10 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import dto.Religion;
-import dto.School;
-import dto.Skill;
-import dto.Staff;
+import dto.*;
 import dao.DBUtill;
 
 public class StaffDao {
@@ -16,7 +13,28 @@ public class StaffDao {
 	ResultSet rs = null;
 	int rowCount = 0;
 	
-	public void staffInsert(Staff staff,Skill[] skill){
+	public int staffSelect(String staff){
+		String selectsql = "SELECT NAME,SN,GRADUATEDAY,SCHOOLNO,RELIGIONNO FORM STAFF";
+		try{
+			conn = DBUtill.getConnection();
+			stmt = conn.prepareStatement(selectsql);
+			rs = stmt.executeQuery();
+			while(rs.next()){
+				
+				
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{rs.close();}catch(Exception e){}
+			try{stmt.close();}catch(Exception e){}
+			try{conn.close();}catch(Exception e){}
+		}
+		return 0;
+		
+	}
+	
+	public void staffInsert(Staff staff,String[] skill){
 		String sql = "INSERT INTO staff(No, NAME, SN, GRADUATEDAY, SCHOOLNO, RELIGIONNO) VALUES (STAFF_SEQ.nextval,?,?,?,?,?)";
 		try{
 			conn = DBUtill.getConnection();
@@ -29,14 +47,18 @@ public class StaffDao {
 			
 			stmt.executeUpdate();
 			
-/*			for(i=0; i<skill[].length; i++){
-				String staffsql = "INSERT INTO STAFFSKILL(NO, STAFF, SKILL) VALUES (STAFFSKILL_SEQ.NEXTVLA,(SELECT no FROM STAFF WHERE SN),?)";
-				Stmt.setString(1,);
-				Stmt.setString(2,);
-				Stmt.setString(3,);
-				
+			for(int i=0; i<skill.length; i++){
+				try{
+				String staffsql = "INSERT INTO STAFFSKILL(NO, STAFFNO, SKILLNO) VALUES (STAFFSKILL_SEQ.nextval,(SELECT no FROM STAFF WHERE SN=?),?)";
+				stmt = conn.prepareStatement(staffsql);
+				stmt.setString(1, staff.getSn());
+				stmt.setString(2, skill[i]);
+								
 				stmt.executeUpdate();
-			}*/
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally{
@@ -49,7 +71,6 @@ public class StaffDao {
 	}
 	
 	public ArrayList<Religion> selectReligion(Religion re){
-
 		String sql = "select no, name From religion";
 		ArrayList<Religion> religionList = new ArrayList<Religion>();
 		try {
@@ -76,9 +97,6 @@ public class StaffDao {
 	}
 	
 	public ArrayList<School> selectSchool(School sc){
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
 		String sql = "select no, graduate From School";
 		ArrayList<School> schoolList = new ArrayList<School>();
 		try {
@@ -105,9 +123,6 @@ public class StaffDao {
 	}
 	
 	public ArrayList<Skill> selectSkill(Skill sk){
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
 		String sql = "select no, name From Skill";
 		ArrayList<Skill> skillList = new ArrayList<Skill>();
 		try {

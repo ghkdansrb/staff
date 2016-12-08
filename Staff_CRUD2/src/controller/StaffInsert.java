@@ -34,14 +34,16 @@ public class StaffInsert extends HttpServlet {
 			System.out.println(schoolNo);
 		int religionNo = Integer.parseInt(request.getParameter("religion"));
 			System.out.println(religionNo);
-		int skillNo = Integer.parseInt(request.getParameter("skill"));
-			System.out.println(skillNo);
+		String[] skillstr = request.getParameterValues("skill");
+		/*int[] skillno = new int[skillstr.length];	*/
+		for(int i=0; i<skillstr.length; i++){
+				System.out.println(skillstr[i]+" <- skill°ª");
+				/*skillno[i] = Integer.parseInt(skillstr[i]);
+				System.out.println(skillno[i]+" <- skillno[i] ÀÇ °ª");*/
+			}
 		
-/*		StaffAndSkill staffSkill = new StaffAndSkill();
-		staffSkill.setSkill(skill);
-		*/
-		Skill skill = new Skill();
-		skill.setNo(skillNo);
+		/*Skill skill = new Skill();
+		skill.setNo();*/
 		
 		School school = new School();
 		school.setNo(schoolNo);
@@ -58,7 +60,7 @@ public class StaffInsert extends HttpServlet {
 
 		
 		StaffDao dao = new StaffDao();
-		dao.staffInsert(staff,null);
+		dao.staffInsert(staff,skillstr);
 		
 	}
 

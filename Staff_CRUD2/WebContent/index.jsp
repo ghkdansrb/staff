@@ -8,8 +8,8 @@
 </head>
 <body>
 <h1>STAFF정보등록화면</h1>
-	<a href="<%=request.getContextPath()%>/Insert">등록</a>
+	<a href="<%=request.getContextPath()%>/StaffInsert">등록</a>
 <H1>STAFF정보조회화면</H1>
-	<a href="select/select.jsp">조회</a>
+	<a href="<%=request.getContextPath()%>/StaffSelect">조회</a>
 </body>
 </html>
