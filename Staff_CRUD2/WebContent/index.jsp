@@ -3,13 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 </head>
 <body>
-<h1>STAFF정보등록화면</h1>
-	<a href="<%=request.getContextPath()%>/StaffInsert">등록</a>
-<H1>STAFF정보조회화면</H1>
-	<a href="<%=request.getContextPath()%>/StaffSelect">조회</a>
+<div class="container">
+	<div class="jumbotron text-center">
+		<h1>STAFF</h1>
+	</div>
+<div class="list-group">
+	<a class="list-group-item" href="<%=request.getContextPath()%>/StaffInsert">add</a>
+	<a class="list-group-item" href="<%=request.getContextPath()%>/StaffSelect">serch</a>
+</div>	
 </body>
 </html>

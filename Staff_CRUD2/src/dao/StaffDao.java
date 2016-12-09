@@ -13,11 +13,13 @@ public class StaffDao {
 	ResultSet rs = null;
 	int rowCount = 0;
 	
-	public int staffSelect(String staff){
+	public int staffAllSelect(String staff){
 		String selectsql = "SELECT NAME,SN,GRADUATEDAY,SCHOOLNO,RELIGIONNO FORM STAFF";
 		try{
 			conn = DBUtill.getConnection();
 			stmt = conn.prepareStatement(selectsql);
+/*			stmt.setInt(parameterIndex, x);
+			stmt.setInt(parameterIndex, x);*/
 			rs = stmt.executeQuery();
 			while(rs.next()){
 				
@@ -34,7 +36,7 @@ public class StaffDao {
 		
 	}
 	
-	public void staffInsert(Staff staff,String[] skill){
+	public String staffInsert(Staff staff,String[] skill){
 		String sql = "INSERT INTO staff(No, NAME, SN, GRADUATEDAY, SCHOOLNO, RELIGIONNO) VALUES (STAFF_SEQ.nextval,?,?,?,?,?)";
 		try{
 			conn = DBUtill.getConnection();
@@ -49,12 +51,16 @@ public class StaffDao {
 			
 			for(int i=0; i<skill.length; i++){
 				try{
-				String staffsql = "INSERT INTO STAFFSKILL(NO, STAFFNO, SKILLNO) VALUES (STAFFSKILL_SEQ.nextval,(SELECT no FROM STAFF WHERE SN=?),?)";
+				String staffsql = "INSERT INTO STAFFSKILL(NO, STAFFNO, SKILLNO) VALUES (STAFFSKILL_SEQ.nextval,NULL,?), Statment.RETURN GENERATED KEYS)";
 				stmt = conn.prepareStatement(staffsql);
 				stmt.setString(1, staff.getSn());
 				stmt.setString(2, skill[i]);
-								
+						
 				stmt.executeUpdate();
+				rs = stmt.getGeneratedKeys();
+				while(rs.next()) {
+					rs.getInt(staff.getNo());
+				}
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -66,6 +72,7 @@ public class StaffDao {
 			try{stmt.close();}catch(Exception e){}
 			try{conn.close();}catch(Exception e){}
 		}
+		return ;
 
 				
 	}

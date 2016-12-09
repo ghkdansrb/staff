@@ -58,9 +58,12 @@ public class StaffInsert extends HttpServlet {
 		staff.setSchool(school);
 		staff.setReligion(religion);
 
-		
 		StaffDao dao = new StaffDao();
 		dao.staffInsert(staff,skillstr);
+		
+		request.setAttribute("dao", dao);
+		
+		request.getRequestDispatcher("/WEB-INF/jsp/staffList.jsp").forward(request, response);
 		
 	}
 
